@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#06182a">
+<title>Siaga Banjir Nusantara</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div id="map" aria-label="Peta risiko banjir Indonesia"></div>
+
+<aside id="panel">
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 40 40" width="38" height="38" aria-hidden="true"><circle cx="20" cy="20" r="6" fill="#2dd4bf"/><circle class="ripple" cx="20" cy="20" r="11" fill="none" stroke="#2dd4bf" stroke-width="2"/><circle class="ripple r2" cx="20" cy="20" r="17" fill="none" stroke="#2dd4bf" stroke-width="1.5"/></svg>
+      <div><h1>Siaga Banjir Nusantara</h1><p id="update">Memuat data BMKG...</p></div>
+    </div>
+    <div class="actions">
+      <button id="btnBell" title="Aktifkan notifikasi browser">Aktifkan notifikasi</button>
+      <button id="btnRefresh" class="ghost" title="Ambil data terbaru dari BMKG">Perbarui</button>
+    </div>
+  </header>
+
+  <a class="balik" href="/">Kembali ke Beranda dan Prediksi Curah Hujan</a>
+
+  <section class="stats" id="stats"></section>
+
+  <div class="tools">
+    <input id="cari" type="search" placeholder="Cari kota atau provinsi" autocomplete="off">
+    <div class="pills" id="pills"></div>
+  </div>
+
+  <ul id="daftar"></ul>
+
+  <footer>
+    <button id="btnTambah" class="ghost">Tambah titik pantau</button>
+    <small>Sumber data: BMKG (Badan Meteorologi, Klimatologi, dan Geofisika). Tingkat risiko adalah indikator berbasis prakiraan hujan, bukan prakiraan banjir resmi.</small>
+  </footer>
+</aside>
+
+<section id="detail" aria-live="polite"></section>
+<div id="toasts"></div>
+
+<dialog id="dlg">
+  <form method="dialog" id="formTambah">
+    <h2>Tambah titik pantau</h2>
+    <label>Nama tempat<input name="nama" required placeholder="Contoh: Kampung Melayu"></label>
+    <label>Provinsi<input name="provinsi" required placeholder="Contoh: DKI Jakarta"></label>
+    <div class="dua"><label>Lintang<input name="lat" required placeholder="-6.22"></label>
+    <label>Bujur<input name="lon" required placeholder="106.86"></label></div>
+    <label>Kode wilayah BMKG (adm4, opsional)<input name="adm4" placeholder="31.75.06.1002"></label>
+    <p class="hint">Dengan kode adm4, prakiraan hujan per 3 jam dari BMKG ikut dihitung.</p>
+    <div class="row"><button value="batal" class="ghost" formnovalidate>Batal</button><button value="ok">Simpan</button></div>
+  </form>
+</dialog>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

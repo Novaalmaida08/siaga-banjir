@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2f6db5">
+<title>Siaga Banjir Nusantara - Prediksi Curah Hujan Indonesia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='beranda.css') }}">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-db" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 4v16h16M8 15l3-4 3 2 5-6"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 1 1 12 0v6l2 2H4zM10 21h4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></symbol>
+</svg>
+
+<nav class="nav">
+  <a class="logo" href="#top"><span class="lg"><svg class="ic"><use href="#i-pin"/></svg></span>SiagaBanjir</a>
+  <div class="links"><a href="#tentang">Tentang</a><a href="#teknologi">Teknologi</a><a href="#fitur">Fitur</a><a href="#prediksi">Prediksi</a></div>
+  <a class="btn" href="#prediksi">Coba Prediksi</a>
+</nav>
+
+<main id="top">
+<section class="hero">
+  <div class="hero-teks rev">
+    <span class="tag">Open-Meteo ERA5 &middot; BMKG &middot; Seluruh Indonesia</span>
+    <h1>Prediksi <em>Curah Hujan</em> Mingguan untuk Indonesia.</h1>
+    <p>Pantau musim hujan jauh sebelum banjir datang. Sistem ini membaca data hujan historis sejak 2010 untuk puluhan kota, lalu memadukannya dengan peringatan dini langsung dari BMKG.</p>
+    <div class="aksi"><a class="btn" href="#prediksi">Mulai Prediksi</a><a class="btn putih" href="/peta">Buka Peta dan Peringatan</a></div>
+    <div class="angka"><div><small>Rentang data</small><b>16+ <i>tahun</i></b></div><div><small>Frekuensi</small><b>Mingguan</b></div><div><small>Lokasi</small><b id="jmlKota">41</b></div></div>
+  </div>
+  <div class="kartu hero-kartu rev">
+    <div class="kartu-kepala"><span class="ikon"><svg class="ic"><use href="#i-pin"/></svg></span>
+      <div><small>Contoh prediksi</small><strong id="heroJudul">Jakarta, 4 minggu ke depan</strong></div><span class="chip">Musiman</span></div>
+    <div id="heroGrafik" class="grafik kecil"><p class="muat">Memuat contoh...</p></div>
+    <div class="dua"><div class="mini"><small>Rata-rata</small><b id="heroRata">-</b></div><div class="mini"><small>Tren</small><b id="heroTren">-</b></div></div>
+  </div>
+</section>
+
+<section id="tentang" class="blok">
+  <div class="kiri rev">
+    <span class="tag">Tentang sistem</span>
+    <h2>Tenang, jelas, dan <em>bisa dipercaya.</em></h2>
+    <p>Siaga Banjir Nusantara menggabungkan dua hal: <b>prediksi curah hujan mingguan</b> berdasarkan data historis, dan <b>peringatan dini hujan BMKG</b> yang diperbarui otomatis. Hasilnya tampil sebagai grafik, tabel, dan peta berwarna.</p>
+    <p>Tingkat risiko adalah indikator dari curah hujan, bukan prakiraan banjir resmi. Untuk keputusan keselamatan, ikuti BMKG, BNPB, dan BPBD setempat.</p>
+  </div>
+  <div class="grid2">
+    <article class="kartu fitur rev"><span class="ikon"><svg class="ic"><use href="#i-db"/></svg></span><h3>Data 2010 sampai kini</h3><p>Lebih dari 16 tahun data harian dijumlahkan per minggu agar pola musim hujan terlihat jelas.</p></article>
+    <article class="kartu fitur rev"><span class="ikon"><svg class="ic"><use href="#i-chart"/></svg></span><h3>Dua model prediksi</h3><p>Model Musiman membaca pola tahunan. Model Adaptif menyesuaikannya dengan kondisi 8 minggu terakhir.</p></article>
+    <article class="kartu fitur rev"><span class="ikon"><svg class="ic"><use href="#i-bell"/></svg></span><h3>Notifikasi peringatan</h3><p>Dapat pemberitahuan di browser saat status lokasi yang Anda pantau naik ke Siaga atau Awas.</p></article>
+    <article class="kartu fitur rev"><span class="ikon"><svg class="ic"><use href="#i-pin"/></svg></span><h3>Peta seluruh Indonesia</h3><p>38 provinsi dan titik pantau tambahan, diberi warna sesuai tingkat risiko.</p></article>
+  </div>
+</section>
+
+<section id="teknologi" class="blok tengah">
+  <span class="tag rev">Teknologi</span>
+  <h2 class="rev">Dibangun ringan dan <em>andal.</em></h2>
+  <p class="rev sub">Python di sisi server, database SQLite, dan data terbuka dari lembaga yang kredibel.</p>
+  <div class="grid6">
+    <div class="kartu chipk rev"><svg class="ic"><use href="#i-code"/></svg><b>Flask</b><small>Backend Python</small></div>
+    <div class="kartu chipk rev"><svg class="ic"><use href="#i-db"/></svg><b>SQLite</b><small>Database lokal</small></div>
+    <div class="kartu chipk rev"><svg class="ic"><use href="#i-chart"/></svg><b>Open-Meteo</b><small>Data hujan ERA5</small></div>
+    <div class="kartu chipk rev"><svg class="ic"><use href="#i-shield"/></svg><b>API BMKG</b><small>Peringatan dini</small></div>
+    <div class="kartu chipk rev"><svg class="ic"><use href="#i-pin"/></svg><b>Leaflet</b><small>Peta interaktif</small></div>
+    <div class="kartu chipk rev"><svg class="ic"><use href="#i-bell"/></svg><b>Notifikasi</b><small>Browser</small></div>
+  </div>
+</section>
+
+<section id="fitur" class="blok tengah">
+  <span class="tag rev">Fitur</span>
+  <h2 class="rev">Semua yang Anda butuhkan <em>dalam satu tempat.</em></h2>
+  <div class="grid3">
+    <a class="kartu fitur rev" href="#prediksi"><span class="ikon"><svg class="ic"><use href="#i-chart"/></svg></span><h3>Prediksi mingguan</h3><p>Pilih kota, model, dan jangkauan 1 sampai 52 minggu.</p></a>
+    <a class="kartu fitur rev" href="/peta"><span class="ikon"><svg class="ic"><use href="#i-pin"/></svg></span><h3>Peta peringatan</h3><p>Lihat status Aman sampai Awas di seluruh Indonesia.</p></a>
+    <a class="kartu fitur rev" href="/api/prediksi?kota=11&horizon=8"><span class="ikon"><svg class="ic"><use href="#i-code"/></svg></span><h3>API JSON</h3><p>Hasil prediksi bisa dipakai aplikasi lain lewat /api/prediksi.</p></a>
+  </div>
+</section>
+
+<section id="prediksi" class="blok tengah">
+  <span class="tag rev">Prediksi</span>
+  <h2 class="rev">Jalankan prediksi <em>dalam hitungan detik.</em></h2>
+  <p class="rev sub">Pilih kota, model, dan jangkauan. Grafik dan tabel muncul langsung di bawah.</p>
+  <div class="panel">
+    <form class="kartu kontrol rev" id="form">
+      <label>Kota<select id="kota"></select></label>
+      <div class="lab">Model</div>
+      <div class="seg"><button type="button" class="aktif" data-m="musiman">Musiman</button><button type="button" data-m="adaptif">Adaptif</button></div>
+      <label>Jangkauan (minggu) <b id="hz">12</b><input id="horizon" type="range" min="1" max="52" value="12"></label>
+      <button class="btn lebar" id="jalan" type="submit">Jalankan Prediksi</button>
+      <small class="cat">Dijalankan di server. Endpoint: GET /api/prediksi</small>
+      <div class="lab">Lokasi di peta (klik untuk membuka peta lengkap)</div>
+      <div id="miniPeta" title="Klik untuk membuka peta lengkap"></div>
+      <a class="btn putih lebar" id="bukaPeta" href="/peta">Buka di peta lengkap</a>
+    </form>
+    <div class="kanan">
+      <div class="kartu rev"><div class="kartu-kepala"><div><small>Grafik prediksi</small><strong id="gJudul">-</strong></div><span class="chip" id="gChip">-</span></div>
+        <div id="grafik" class="grafik"><p class="muat">Pilih kota lalu jalankan prediksi.</p></div>
+        <p class="legenda"><span class="sw"></span> Rentang kemungkinan 80% <span class="sw2"></span> Perkiraan</p></div>
+      <div class="kartu rev"><div class="kartu-kepala"><div><small>Detail prediksi</small><strong>Curah hujan mingguan (mm)</strong></div><button class="btn putih kecilbtn" id="salin" type="button">Salin JSON</button></div>
+        <div class="ringkas"><div class="mini"><small>Rata-rata</small><b id="sRata">-</b></div><div class="mini"><small>Tren</small><b id="sTren">-</b></div><div class="mini"><small>Minggu lebat</small><b id="sLebat">-</b></div></div>
+        <div class="tabel-bungkus"><table><thead><tr><th>#</th><th>Akhir minggu</th><th>Curah hujan</th><th>Kategori</th></tr></thead><tbody id="tbody"></tbody></table></div>
+        <p class="catatan" id="catatan"></p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="kaki"><b>Siaga Banjir Nusantara</b><span>Data: Open-Meteo (ERA5) dan BMKG. Prediksi bersifat indikatif, bukan peringatan resmi.</span><a href="/peta">Peta dan Peringatan</a></footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="{{ url_for('static', filename='beranda.js') }}"></script>
+</body>
+</html>
